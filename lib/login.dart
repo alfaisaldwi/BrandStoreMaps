@@ -26,9 +26,9 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   children: <Widget>[
                     Text(
-                      'Hello.',
+                      'Hallo.',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black38,
                         fontSize: 48,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.5,
@@ -38,24 +38,21 @@ class _LoginPageState extends State<LoginPage> {
                     Expanded(
                       child: Divider(
                         thickness: 3,
-                        color: Colors.white,
+                        color: Colors.black38,
                       ),
                     ),
                     SizedBox(width: 40),
                   ],
                 ),
-// Tulisan Welcome back
                 Text(
-                  'Welcome back',
+                  'Kontributor',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.w300,
                       fontSize: 36,
                       letterSpacing: 5),
                 ),
-// Spasi
                 SizedBox(height: 40),
-// Form username & password
                 Form(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,44 +161,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Divider(
-                        thickness: 1,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(width: 20),
-                    Text(
-                      'OR',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    SizedBox(width: 20),
-                    Expanded(
-                      child: Divider(
-                        thickness: 1,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Container(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Login with Google',
-                    ),
-                    // shape: RoundedRectangleBorder(
-                    //   borderRadius: BorderRadius.circular(8),
-                    // ),
-                    // color: Colors.white,
-                    // elevation: 0,
-                    // padding: EdgeInsets.symmetric(vertical: 16),
-                  ),
-                ),
+
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(8),
+                // ),
+                // color: Colors.white,
+                // elevation: 0,
+                // padding: EdgeInsets.symmetric(vertical: 16),
+
                 SizedBox(height: 8),
                 Container(
                   width: double.infinity,

@@ -1,6 +1,7 @@
 import 'package:brand_maps/tentang.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GoogleMapPage extends StatefulWidget {
@@ -104,6 +105,7 @@ class _GoogleMapPageState extends State<GoogleMapPage> {
   @override
   void initState() {
     getMarkerData();
+
     super.initState();
   }
 
@@ -119,26 +121,50 @@ class _GoogleMapPageState extends State<GoogleMapPage> {
     }
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('Maps'),
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.white),
+        elevation: 0.0,
+        title: Stack(
+          children: [
+            Text(
+              'Branding Maps',
+              style: TextStyle(
+                fontSize: 20,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 6
+                  ..color = Colors.black54,
+              ),
+            ),
+            Text(
+              'Branding Maps',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.grey[300],
+              ),
+            ),
+          ],
+        ),
         centerTitle: true,
         actions: [
           PopupMenuButton(
             icon: Icon(Icons.menu), //don't specify icon if you want 3 dot menu
-            color: Colors.blue,
+            color: Colors.white,
             itemBuilder: (context) => [
-              const PopupMenuItem<int>(
-                value: 0,
-                child: Text(
-                  "Setting",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
+              // const PopupMenuItem<int>(
+              //   value: 0,
+              //   child: Text(
+              //     "Setting",
+              //     style: TextStyle(color: Colors.black),
+              //   ),
+              // ),
               const PopupMenuItem<int>(
                 value: 1,
                 child: Text(
                   "Tentang",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                 ),
               ),
             ],
@@ -170,14 +196,14 @@ class _GoogleMapPageState extends State<GoogleMapPage> {
               const SizedBox(
                 height: 15,
               ),
-              FloatingActionButton(
-                backgroundColor: Colors.deepPurpleAccent,
-                onPressed: _addPoint,
-                child: Icon(Icons.add_location_alt, size: 30),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
+              // FloatingActionButton(
+              //   backgroundColor: Colors.deepPurpleAccent,
+              //   onPressed: _addPoint,
+              //   child: Icon(Icons.add_location_alt, size: 30),
+              // ),
+              // const SizedBox(
+              //   height: 15,
+              // ),
               // FloatingActionButton(
               //   backgroundColor: Colors.yellowAccent,
               //   onPressed: _moveCamera,
@@ -187,9 +213,9 @@ class _GoogleMapPageState extends State<GoogleMapPage> {
               //   height: 15,
               // ),
               FloatingActionButton(
-                backgroundColor: Colors.greenAccent,
+                backgroundColor: Colors.redAccent,
                 onPressed: _goDefaultLocation,
-                child: Icon(Icons.location_city, size: 30),
+                child: Icon(Icons.location_on_outlined, size: 30),
               ),
             ]),
           ),

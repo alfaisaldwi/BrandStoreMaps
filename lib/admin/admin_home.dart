@@ -1,3 +1,4 @@
+import 'package:brand_maps/admin/halaman_list_marker.dart';
 import 'package:brand_maps/controller/login_controller.dart';
 import 'package:brand_maps/maps_page.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,12 @@ class _AdminHomeState extends State<AdminHome> {
         color: Colors.white,
         child: Column(children: [
           Text('Haloo Admin'),
+          GestureDetector(
+              child: Text('Kelola Lokasi'),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ListMarkerPage()));
+              }),
           ElevatedButton(
             child: Text('Logout'),
             onPressed: () async {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ListMarkerPage extends StatefulWidget {
   ListMarkerPage({Key? key}) : super(key: key);
@@ -25,14 +26,17 @@ class _ListMarkerPageState extends State<ListMarkerPage> {
   // Adding a product if no documentSnapshot is passed
   // If documentSnapshot != null then update an existing product
   Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot]) async {
+    final GeoPoint loc = documentSnapshot?['location'];
+
     String action = 'create';
     if (documentSnapshot != null) {
       action = 'update';
       titleC.text = documentSnapshot['titleT'];
       typeC.text = documentSnapshot['type'];
-      snippsetC.text = documentSnapshot['snippsetT'];
-      lattC.text = documentSnapshot['lattT'];
-      longC.text = documentSnapshot['longT'];
+      snippsetC.text = documentSnapshot['snippset'];
+      // lattC.text = documentSnapshot[loc.latitude.toString];
+      longC.text = documentSnapshot[loc.longitude.toString()];
+      // loc = documentSnapshot['location'];
     }
 
     await showModalBottomSheet(
@@ -68,12 +72,14 @@ class _ListMarkerPageState extends State<ListMarkerPage> {
                 ),
                 TextField(
                   controller: lattC,
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: 'Lattitude',
                   ),
                 ),
                 TextField(
                   controller: longC,
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: 'Longtitude',
                   ),
@@ -87,21 +93,21 @@ class _ListMarkerPageState extends State<ListMarkerPage> {
                     final String? titleT = titleC.text;
                     final String? type = typeC.text;
                     final String? snippsetT = snippsetC.text;
-                    final String? lattT = lattC.text;
-                    final String? longT = longC.text;
+                    final GeoPoint loc = new GeoPoint(
+                        double.parse(lattC.text), double.parse(longC.text));
+                    final double longT = double.parse(longC.text);
 
                     if (titleT != null &&
                         type != null &&
                         snippsetT != null &&
-                        lattT != null &&
+                        loc != null &&
                         longT != null) {
                       if (action == 'create') {
                         await dbMaps.add({
                           "titleT": titleT,
                           "type": type,
-                          "snippsetT": snippsetT,
-                          "lattT": lattT,
-                          "longT": longT
+                          "snippset": snippsetT,
+                          "location": loc,
                         });
                       }
 
@@ -110,9 +116,8 @@ class _ListMarkerPageState extends State<ListMarkerPage> {
                         await dbMaps.doc(documentSnapshot!.id).update({
                           "titleT": titleT,
                           "type": type,
-                          "snippsetT": snippsetT,
-                          "lattT": lattT,
-                          "longT": longT
+                          "snippset": snippsetT,
+                          "location": loc
                         });
                       }
 

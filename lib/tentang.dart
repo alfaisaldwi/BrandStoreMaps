@@ -18,30 +18,31 @@ class _TentangPageState extends State<TentangPage> {
         centerTitle: true,
       ),
       body: Container(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Flexible(
-            child: ListView(
-              children: [
-                GestureDetector(
-                    child: Text('Kelola Lokasi'),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ListMarkerPage()));
-                    }),
-              ],
-            ),
+        alignment: Alignment.center,
+        color: Colors.white,
+        child: Column(children: [
+          SizedBox(
+            height: 30,
           ),
-          ElevatedButton(
-            child: Text('login'),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginPage(),
-                  ));
-            },
+         
+          SizedBox(
+            height: 20,
+          ),
+          Text('Aplikasi BrandingMaps - Hastuti Romdhona'),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: ElevatedButton(
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: Colors.lightGreen),
+              child: Text('Kontributor'),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ));
+              },
+            ),
           )
         ]),
       ),
