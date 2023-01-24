@@ -1,3 +1,4 @@
+import 'package:brand_maps/maps_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class _ListMarkerPageState extends State<ListMarkerPage> {
   // Adding a product if no documentSnapshot is passed
   // If documentSnapshot != null then update an existing product
   Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot]) async {
-    final GeoPoint loc = documentSnapshot?['location'];
+    // final GeoPoint loc = documentSnapshot?['location'];
 
     String action = 'create';
     if (documentSnapshot != null) {
@@ -35,7 +36,7 @@ class _ListMarkerPageState extends State<ListMarkerPage> {
       typeC.text = documentSnapshot['type'];
       snippsetC.text = documentSnapshot['snippset'];
       // lattC.text = documentSnapshot[loc.latitude.toString];
-      longC.text = documentSnapshot[loc.longitude.toString()];
+      // longC.text = documentSnapshot[loc.longitude.toString()];
       // loc = documentSnapshot['location'];
     }
 
@@ -163,57 +164,73 @@ class _ListMarkerPageState extends State<ListMarkerPage> {
                 }),
           ],
         ),
-        body: StreamBuilder(
-          stream: _fireStore.snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
-            }
+        body: Column(
+          children: [
+            ElevatedButton(
+              child: Text('Kembali kehalaman utama'),
+              onPressed: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                      builder: (context) => GoogleMapPage(),
+                      maintainState: true)),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            StreamBuilder(
+              stream: _fireStore.snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                }
 
-            return ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                final DocumentSnapshot document = snapshot.data!.docs[index];
+                return ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    final DocumentSnapshot document =
+                        snapshot.data!.docs[index];
 
-                return Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ListTile(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-                      leading: const Icon(Icons.store_mall_directory),
-                      title:
-                          Text('${document['type']} - ${document['titleT']}'),
-                      subtitle: Text(
-                          '${document['snippset']} | LattLing : ${document['location'].latitude} - ${document['location'].longitude}'),
-                      trailing: SizedBox(
-                        width: 100,
-                        child: Row(
-                          children: [
-                            // Press this button to edit a single product
-                            IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () => _createOrUpdate(document)),
-                            // This icon button is used to delete a single product
-                            IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () => _deleteProduct(document.id)),
-                          ],
+                    return Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                  ],
+                        ListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 5.0),
+                          leading: const Icon(Icons.store_mall_directory),
+                          title: Text(
+                              '${document['type']} - ${document['titleT']}'),
+                          subtitle: Text(
+                              '${document['snippset']} | LattLing : ${document['location'].latitude} - ${document['location'].longitude}'),
+                          trailing: SizedBox(
+                            width: 100,
+                            child: Row(
+                              children: [
+                                // Press this button to edit a single product
+                                IconButton(
+                                    icon: const Icon(Icons.edit),
+                                    onPressed: () => _createOrUpdate(document)),
+                                // This icon button is used to delete a single product
+                                IconButton(
+                                    icon: const Icon(Icons.delete),
+                                    onPressed: () =>
+                                        _deleteProduct(document.id)),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
-            );
-          },
+            ),
+          ],
         ));
   }
 }

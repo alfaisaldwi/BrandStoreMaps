@@ -15,6 +15,8 @@ class _LoginPageState extends State<LoginPage> {
   final emailC = TextEditingController();
   final passwordC = TextEditingController();
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 Text(
-                  'Kontributor',
+                  'Admin',
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w300,
@@ -128,11 +130,11 @@ class _LoginPageState extends State<LoginPage> {
                                 if (await FirebaseAuth
                                         .instance.currentUser?.uid !=
                                     null) {
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => AdminHome(),
-                                      ));
+                                          builder: (context) => AdminHome(),
+                                          maintainState: true));
                                 } else {
                                   showDialog(
                                       context: context,
@@ -170,21 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                 // padding: EdgeInsets.symmetric(vertical: 16),
 
                 SizedBox(height: 8),
-                Container(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Login with Facebook',
-                    ),
-                    // shape: RoundedRectangleBorder(
-                    //   borderRadius: BorderRadius.circular(8),
-                    // ),
-                    // color: Colors.white,
-                    // elevation: 0,
-                    // padding: EdgeInsets.symmetric(vertical: 16),
-                  ),
-                ),
+
                 SizedBox(height: 30),
               ]),
             ),

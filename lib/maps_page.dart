@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:ui' as ui;
 
 class GoogleMapPage extends StatefulWidget {
   GoogleMapPage({Key? key}) : super(key: key);
@@ -71,19 +72,64 @@ class _GoogleMapPageState extends State<GoogleMapPage> {
   }
 
   void initMarker(specify, specifyId) async {
-    var markerIdVal = specifyId;
-    final MarkerId markerId = MarkerId(markerIdVal);
-    final Marker marker = Marker(
-      markerId: markerId,
-      position:
-          LatLng(specify['location'].latitude, specify['location'].longitude),
-      infoWindow: InfoWindow(
-          title: '${specify['type']} - ${specify['titleT']}',
-          snippet: '${specify['snippset']}'),
-    );
-    setState(() {
-      markers[markerId] = marker;
-    });
+    if (specify['type'] == 'Toko') {
+      Future<Uint8List> getBytesFromAsset(String path, int width) async {
+        ByteData data = await rootBundle.load(path);
+        ui.Codec codec = await ui.instantiateImageCodec(
+            data.buffer.asUint8List(),
+            targetWidth: width);
+        ui.FrameInfo fi = await codec.getNextFrame();
+        return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+            .buffer
+            .asUint8List();
+      }
+
+      final Uint8List markerIcon =
+          await getBytesFromAsset('assets/image/toko.png', 120);
+
+      var markerIdVal = specifyId;
+      final MarkerId markerId = MarkerId(markerIdVal);
+      final Marker marker = Marker(
+        markerId: markerId,
+        icon: BitmapDescriptor.fromBytes(markerIcon),
+        position:
+            LatLng(specify['location'].latitude, specify['location'].longitude),
+        infoWindow: InfoWindow(
+            title: '${specify['type']} - ${specify['titleT']}',
+            snippet: '${specify['snippset']}'),
+      );
+      setState(() {
+        markers[markerId] = marker;
+      });
+    } else {
+      Future<Uint8List> getBytesFromAsset(String path, int width) async {
+        ByteData data = await rootBundle.load(path);
+        ui.Codec codec = await ui.instantiateImageCodec(
+            data.buffer.asUint8List(),
+            targetWidth: width);
+        ui.FrameInfo fi = await codec.getNextFrame();
+        return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+            .buffer
+            .asUint8List();
+      }
+
+      final Uint8List markerIcon =
+          await getBytesFromAsset('assets/image/brand.png', 140);
+      var markerIdVal = specifyId;
+      final MarkerId markerId = MarkerId(markerIdVal);
+      final Marker marker = Marker(
+        markerId: markerId,
+        icon: BitmapDescriptor.fromBytes(markerIcon),
+        position:
+            LatLng(specify['location'].latitude, specify['location'].longitude),
+        infoWindow: InfoWindow(
+            title: '${specify['type']} - ${specify['titleT']}',
+            snippet: '${specify['snippset']}'),
+      );
+      setState(() {
+        markers[markerId] = marker;
+      });
+    }
   }
 
   getMarkerData() async {
@@ -116,7 +162,8 @@ class _GoogleMapPageState extends State<GoogleMapPage> {
         Marker(
             markerId: MarkerId('Shop'),
             position: LatLng(-6.723512, 108.560025),
-            infoWindow: InfoWindow(title: 'soop'))
+            infoWindow: InfoWindow(title: 'soop'),
+            icon: BitmapDescriptor.defaultMarker),
       ].toSet();
     }
 

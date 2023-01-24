@@ -1,5 +1,7 @@
+import 'package:brand_maps/admin/admin_home.dart';
 import 'package:brand_maps/admin/halaman_list_marker.dart';
 import 'package:brand_maps/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class TentangPage extends StatefulWidget {
@@ -20,31 +22,36 @@ class _TentangPageState extends State<TentangPage> {
       body: Container(
         alignment: Alignment.center,
         color: Colors.white,
-        child: Column(children: [
-          SizedBox(
-            height: 30,
-          ),
-         
-          SizedBox(
-            height: 20,
-          ),
-          Text('Aplikasi BrandingMaps - Hastuti Romdhona'),
-          Container(
-            alignment: Alignment.bottomCenter,
-            child: ElevatedButton(
-              style:
-                  ElevatedButton.styleFrom(backgroundColor: Colors.lightGreen),
-              child: Text('Kontributor'),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginPage(),
-                    ));
-              },
-            ),
-          )
-        ]),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                height: 30,
+              ),
+              Text('Aplikasi BrandingMaps - Hastuti Romdhona'),
+              Container(
+                alignment: Alignment.bottomCenter,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.lightGreen),
+                    child: Text('Admin'),
+                    onPressed: () {
+                      if (FirebaseAuth.instance.currentUser == null) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ));
+                      } else {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AdminHome(),
+                            ));
+                      }
+                    }),
+              )
+            ]),
       ),
     );
   }

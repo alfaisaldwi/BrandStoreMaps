@@ -15,31 +15,36 @@ class _AdminHomeState extends State<AdminHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Admin Home'),
+        automaticallyImplyLeading: false,
+        title: Text('Halaman Admin'),
         centerTitle: true,
       ),
       body: Container(
         color: Colors.white,
-        child: Column(children: [
-          Text('Haloo Admin'),
-          GestureDetector(
-              child: Text('Kelola Lokasi'),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ListMarkerPage()));
-              }),
-          ElevatedButton(
-            child: Text('Logout'),
-            onPressed: () async {
-              AuthService().asignOutUser();
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GoogleMapPage(),
-                  ));
-            },
-          )
-        ]),
+        child: Container(
+          alignment: Alignment.center,
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            ElevatedButton(
+                child: Text('Kelola Lokasi'),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ListMarkerPage()));
+                }),
+            ElevatedButton(
+              child: Text('Logout'),
+              onPressed: () async {
+                AuthService().asignOutUser();
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GoogleMapPage(),
+                    ));
+              },
+            )
+          ]),
+        ),
       ),
     );
   }
