@@ -28,28 +28,34 @@ class _TentangPageState extends State<TentangPage> {
               SizedBox(
                 height: 30,
               ),
-              Text('Aplikasi BrandingMaps - Hastuti Romdhona'),
-              Container(
-                alignment: Alignment.bottomCenter,
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lightGreen),
-                    child: Text('Admin'),
-                    onPressed: () {
-                      if (FirebaseAuth.instance.currentUser == null) {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                            ));
-                      } else {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AdminHome(),
-                            ));
-                      }
-                    }),
+              Center(child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Aplikasi BrandingMaps - Hastuti Romdhona untuk PT Sanghiang Perkasa (Kalbe Nutritional)',textAlign: TextAlign.center,),
+              )),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  alignment: Alignment.bottomCenter,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.lightGreen),
+                      child: Text('Admin'),
+                      onPressed: () {
+                        if (FirebaseAuth.instance.currentUser == null) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ));
+                        } else {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AdminHome(),
+                              ));
+                        }
+                      }),
+                ),
               )
             ]),
       ),
