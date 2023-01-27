@@ -206,31 +206,55 @@ class _ListMarkerPageState extends State<ListMarkerPage> {
                             height: 10,
                           ),
                           ListTile(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 5.0),
-                            leading: const Icon(Icons.store_mall_directory),
-                            title: Text(
-                                '${document['type']} - ${document['titleT']}'),
-                            subtitle: Text(
-                                '${document['snippset']} | LattLing : ${document['location'].latitude} - ${document['location'].longitude}'),
-                            trailing: SizedBox(
-                              width: 100,
-                              child: Row(
-                                children: [
-                                  // Press this button to edit a single product
-                                  IconButton(
-                                      icon: const Icon(Icons.edit),
-                                      onPressed: () =>
-                                          _createOrUpdate(document)),
-                                  // This icon button is used to delete a single product
-                                  IconButton(
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 5.0),
+                              leading: const Icon(Icons.store_mall_directory),
+                              title: Text(
+                                  '${document['type']} - ${document['titleT']}'),
+                              subtitle: Text(
+                                  '${document['snippset']} | LattLing : ${document['location'].latitude} - ${document['location'].longitude}'),
+                              trailing: SizedBox(
+                                  width: 100,
+                                  child: Row(children: [
+                                    Container(
+                                      width: 40,
+                                    ),
+                                    // Press this button to edit a single product
+                                    // IconButton(
+                                    //     icon: const Icon(Icons.edit),
+                                    //     onPressed: () =>
+                                    //         _createOrUpdate(document)),
+                                    // This icon button is used to delete a single product
+                                    IconButton(
                                       icon: const Icon(Icons.delete),
-                                      onPressed: () =>
-                                          _deleteProduct(document.id)),
-                                ],
-                              ),
-                            ),
-                          ),
+                                      onPressed: () => showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text('Perhatian !'),
+                                              content: Text(
+                                                  "Anda Yakin Menghapus Data Ini ?"),
+                                              actions: <Widget>[
+                                                ElevatedButton(
+                                                  child: Text("Ya"),
+                                                  onPressed: () async {
+                                                    //Put your code here which you want to execute on Yes button click.
+                                                    await _deleteProduct(document.id);
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                                ElevatedButton(
+                                                  child: Text("Tidak"),
+                                                  onPressed: () {
+                                                    //Put your code here which you want to execute on No button click.
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          }),
+                                    ),
+                                  ]))),
                           SizedBox(
                             height: 5,
                           ),
